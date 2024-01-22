@@ -23,9 +23,6 @@ jobs:
             *) echo "Due to restriction, the run was blocked (${trig_actor})... exiting." >&2 ; exit 1 ;;
           esac
 
-      - name: "delay"
-        run: sleep 60
-
       - name: "check_latest"
         id: check_latest
         env:
