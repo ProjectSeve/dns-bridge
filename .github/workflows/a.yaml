@@ -1,8 +1,8 @@
 name: "update status"
 on:
    workflow_dispatch:
-#   schedule:
-#     - cron: "0 */3 * * *"
+   schedule:
+     - cron: "0 */2 * * *"
 
 concurrency:
   group: ${{ github.ref }}
@@ -43,24 +43,16 @@ jobs:
       - name: execute
         if: ${{ steps.check_latest.outputs.skip == 'false' }}
         continue-on-error: true
-        run: |
-          bash main.sh
-
-      - name: update
-        if: ${{ steps.check_latest.outputs.skip == 'false' }}
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "updated"
-          repository: .
-          file_pattern: ./*
-
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: continue
+          EM: ${{ secrets.EM }}
+          PA: ${{ secrets.PA }}
         run: |
-          curl -sLf -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -X POST \
-            -d '{"ref":"'"${{ github.ref }}"'","inputs":{}}' "https://api.github.com/repos/${{ github.repository }}/actions/workflows/a.yaml/dispatches" \
-            -o /dev/null
+          bash main.sh "$EM" "$PA"
+
+#      - name: continue
+#        run: |
+#          curl -sLf -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+#            -H "Accept: application/vnd.github.v3+json" \
+#            -X POST \
+#            -d '{"ref":"'"${{ github.ref }}"'","inputs":{}}' "https://api.github.com/repos/${{ github.repository }}/actions/workflows/a.yaml/dispatches" \
+#            -o /dev/null
