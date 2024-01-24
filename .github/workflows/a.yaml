@@ -47,7 +47,7 @@ jobs:
           EM: ${{ secrets.EM }}
           PA: ${{ secrets.PA }}
         run: |
-          bash main.sh "$EM" "$PA"
+          bash autoclaim.sh "$EM" "$PA"
 
 #      - name: continue
 #        run: |
