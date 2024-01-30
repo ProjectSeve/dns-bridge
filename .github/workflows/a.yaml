@@ -55,7 +55,7 @@ jobs:
           EM: ${{ secrets.EM }}
           PA: ${{ secrets.PA }}
         run: |
-          bash -x autoclaim.sh "$EM" "$PA"
+          bash autoclaim.sh "$EM" "$PA"
 
       - name: "cleanups"
         run: |
