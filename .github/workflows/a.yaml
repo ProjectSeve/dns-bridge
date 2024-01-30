@@ -2,7 +2,7 @@ name: "update status"
 on:
    workflow_dispatch:
    schedule:
-     - cron: "0 */2 * * *"
+     - cron: "0 * * * *"
 
 concurrency:
   group: ${{ github.ref }}
@@ -56,6 +56,12 @@ jobs:
           PA: ${{ secrets.PA }}
         run: |
           bash -x autoclaim.sh "$EM" "$PA"
+
+      - name: "cleanups"
+        run: |
+           sudo pkill -9 openvpn
+           sudo kill "$(<openvpn.pid)" || true
+           sudo rm -f openvpn.* || true
 
 #      - name: continue
 #        run: |
