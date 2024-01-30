@@ -3,7 +3,7 @@ password="$2"
 
 
 haha="$(curl -sL -D - "https://freenet.cafe/login" | sed -nE 's/.*XSRF-TOKEN=([^;]*)\;.*/XSRF-TOKEN=\1/p;s/.*fcafessh_session=([^;]*)\;.*/fcafessh_session=\1/p;s/.*_token" value="([^"]*)".*/_token=\1/p')"
-hehe="$(curl -D- 'https://freenet.cafe/authenticate' \
+hehe="$(curl -s -D- 'https://freenet.cafe/authenticate' \
   -H 'authority: freenet.cafe' \
   -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
   -H 'accept-language: en-GB,en;q=0.9,ja-JP;q=0.8,ja;q=0.7,en-US;q=0.6' \
